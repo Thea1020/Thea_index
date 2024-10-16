@@ -12,9 +12,9 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(to bottom, #87CEEB, #4682B4); /* 渐变背景 */
             overflow: hidden;
             font-family: "SimSun", "宋体", sans-serif;
+            position: relative;
         }
         #startBtn {
             padding: 20px;
@@ -26,16 +26,18 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s, background-color 0.3s;
-            filter: blur(0px); /* 可爱的果冻感 */
         }
         #startBtn:hover {
             transform: scale(1.05);
-            background-color: #FFEA00; /* 悬停时颜色变化 */
+            background-color: #FFEA00;
         }
         #result {
             font-size: 36px;
             margin: 20px 0;
-            color: white; /* 字体颜色 */
+            color: white;
+            opacity: 0; /* 初始透明度 */
+            transform: translateY(-20px); /* 初始位置 */
+            transition: opacity 0.5s, transform 0.5s; /* 动画过渡 */
         }
         .fullscreen-img {
             position: fixed;
@@ -46,30 +48,34 @@
             object-fit: cover;
             display: none;
             opacity: 0;
-            transition: opacity 1s ease; /* 渐变效果 */
+            transition: opacity 1s ease;
         }
         .show {
             display: block;
-            opacity: 1; /* 显示时透明度为1 */
+            opacity: 1;
         }
-        /* 海浪动画 */
         .wave {
             position: absolute;
             bottom: 0;
             width: 100%;
             height: 20%;
-            background: url('https://www.transparenttextures.com/patterns/waves.png'); /* 海浪纹理 */
+            background: url('https://www.transparenttextures.com/patterns/waves.png');
             animation: wave 5s infinite linear;
         }
         @keyframes wave {
             0% { background-position-x: 0; }
             100% { background-position-x: 100%; }
         }
+        @keyframes popIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div class="wave"></div>
-    <button id="startBtn">开始</button>
+    <button id="startBtn">今日测测</button>
     <div id="result"></div>
     <img id="img1" class="fullscreen-img" src="微信图片_20240722184058.jpg" alt="图片1">
     <img id="img2" class="fullscreen-img" src="微信图片_20240722184101.jpg" alt="图片2">
@@ -83,11 +89,19 @@
         document.getElementById('startBtn').onclick = function() {
             var randomNum = Math.floor(Math.random() * 7) + 1;
             // 显示数字
-            document.getElementById('result').innerHTML = '您今天的幸运数字是: ' + randomNum;
+            var resultElement = document.getElementById('result');
+            resultElement.innerHTML = '您今天的幸运数字是: ' + randomNum;
 
             // 隐藏按钮
             document.getElementById('startBtn').style.display = 'none';
             
+            // 显示数字的动画效果
+            setTimeout(function() {
+                resultElement.style.opacity = '1';
+                resultElement.style.transform = 'translateY(0)';
+                resultElement.style.animation = 'popIn 0.5s forwards'; // 添加弹出动画
+            }, 100); // 等待100毫秒
+
             // 在一段时间后显示图片
             setTimeout(function() {
                 // 显示对应的图片
