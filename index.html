@@ -15,6 +15,7 @@
             overflow: hidden;
             font-family: "SimSun", "宋体", sans-serif;
             position: relative;
+            background-color: #0077be; /* 背景色 */
         }
         #startBtn {
             padding: 20px;
@@ -59,7 +60,7 @@
             bottom: 0;
             width: 100%;
             height: 20%;
-            background: url('https://img.soogif.com/WHPNgMy8WXj5iLxAv1BYdXo3cSsmX2ql.gif');
+            background: url('https://img.soogif.com/WHPNgMy8WXj5iLxAv1BYdXo3cSsmX2ql.gif'); /* 我自己选的gif */
             animation: wave 5s infinite linear;
         }
         @keyframes wave {
@@ -68,14 +69,13 @@
         }
         @keyframes popIn {
             0% { opacity: 0; transform: translateY(-20px); }
-            50% { opacity: 0.5; }
             100% { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <div class="wave"></div>
-    <button id="startBtn">今日测测</button>
+    <button id="startBtn">开始</button>
     <div id="result"></div>
     <img id="img1" class="fullscreen-img" src="微信图片_20240722184058.jpg" alt="图片1">
     <img id="img2" class="fullscreen-img" src="微信图片_20240722184101.jpg" alt="图片2">
@@ -88,7 +88,6 @@
     <script>
         document.getElementById('startBtn').onclick = function() {
             var randomNum = Math.floor(Math.random() * 7) + 1;
-            // 显示数字
             var resultElement = document.getElementById('result');
             resultElement.innerHTML = '您今天的幸运数字是: ' + randomNum;
 
@@ -107,6 +106,7 @@
                 // 显示对应的图片
                 var selectedImage = document.getElementById('img' + randomNum);
                 selectedImage.classList.add('show'); // 添加显示类
+                selectedImage.style.display = 'block'; // 确保图片被显示
             }, 2000); // 2秒后显示图片
         };
     </script>
