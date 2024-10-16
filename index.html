@@ -7,27 +7,31 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             background-color: #f0f0f0;
+            font-family: "SimSun", "宋体", sans-serif;
         }
         #startBtn {
             padding: 20px;
             border: none;
             border-radius: 50%;
-            background-color: #007BFF;
+            background-color: #FFD700;
             color: white;
             font-size: 24px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
         }
         #startBtn:hover {
-            background-color: #0056b3;
+            transform: scale(1.05);
         }
-        .hidden {
-            display: none;
+        #result {
+            font-size: 36px;
+            margin: 20px 0;
         }
         .fullscreen-img {
             position: fixed;
@@ -42,6 +46,7 @@
 </head>
 <body>
     <button id="startBtn">开始</button>
+    <div id="result"></div>
     <img id="img1" class="fullscreen-img" src="https://via.placeholder.com/800x600?text=图片1" alt="图片1">
     <img id="img2" class="fullscreen-img" src="https://via.placeholder.com/800x600?text=图片2" alt="图片2">
     <img id="img3" class="fullscreen-img" src="https://via.placeholder.com/800x600?text=图片3" alt="图片3">
@@ -53,11 +58,18 @@
     <script>
         document.getElementById('startBtn').onclick = function() {
             var randomNum = Math.floor(Math.random() * 7) + 1;
+            // 显示数字
+            document.getElementById('result').innerHTML = '生成的数字是: ' + randomNum;
+
             // 隐藏按钮
             document.getElementById('startBtn').style.display = 'none';
-            // 显示对应的图片
-            var selectedImage = document.getElementById('img' + randomNum);
-            selectedImage.style.display = 'block';
+            
+            // 在一段时间后显示图片
+            setTimeout(function() {
+                // 显示对应的图片
+                var selectedImage = document.getElementById('img' + randomNum);
+                selectedImage.style.display = 'block';
+            }, 1000); // 1秒后显示图片
         };
     </script>
 </body>
