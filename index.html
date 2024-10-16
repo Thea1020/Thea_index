@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机数生成器</title>
+    <title>今日好运</title>
     <style>
         body {
             display: flex;
@@ -12,7 +12,8 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background: linear-gradient(to bottom, #87CEEB, #4682B4); /* 渐变背景 */
+            overflow: hidden;
             font-family: "SimSun", "宋体", sans-serif;
         }
         #startBtn {
@@ -23,15 +24,18 @@
             color: white;
             font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, background-color 0.3s;
+            filter: blur(0px); /* 可爱的果冻感 */
         }
         #startBtn:hover {
             transform: scale(1.05);
+            background-color: #FFEA00; /* 悬停时颜色变化 */
         }
         #result {
             font-size: 36px;
             margin: 20px 0;
+            color: white; /* 字体颜色 */
         }
         .fullscreen-img {
             position: fixed;
@@ -41,25 +45,45 @@
             height: 100%;
             object-fit: cover;
             display: none;
+            opacity: 0;
+            transition: opacity 1s ease; /* 渐变效果 */
+        }
+        .show {
+            display: block;
+            opacity: 1; /* 显示时透明度为1 */
+        }
+        /* 海浪动画 */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20%;
+            background: url('https://www.transparenttextures.com/patterns/waves.png'); /* 海浪纹理 */
+            animation: wave 5s infinite linear;
+        }
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 100%; }
         }
     </style>
 </head>
 <body>
+    <div class="wave"></div>
     <button id="startBtn">开始</button>
     <div id="result"></div>
-    <img id="img1" class="fullscreen-img" src="微信图片_20240722184058.jpg=图片1" alt="图片1">
-    <img id="img2" class="fullscreen-img" src="微信图片_20240722184101.jpg=图片2" alt="图片2">
-    <img id="img3" class="fullscreen-img" src="微信图片_20240722184104.jpg=图片3" alt="图片3">
-    <img id="img4" class="fullscreen-img" src="微信图片_20240722184106.jpg=图片4" alt="图片4">
-    <img id="img5" class="fullscreen-img" src="微信图片_20240722184108.jpg=图片5" alt="图片5">
-    <img id="img6" class="fullscreen-img" src="微信图片_20240722184113.jpg=图片6" alt="图片6">
-    <img id="img7" class="fullscreen-img" src="微信图片_20240722184759.jpg=图片7" alt="图片7">
+    <img id="img1" class="fullscreen-img" src="微信图片_20240722184058.jpg" alt="图片1">
+    <img id="img2" class="fullscreen-img" src="微信图片_20240722184101.jpg" alt="图片2">
+    <img id="img3" class="fullscreen-img" src="微信图片_20240722184104.jpg" alt="图片3">
+    <img id="img4" class="fullscreen-img" src="微信图片_20240722184106.jpg" alt="图片4">
+    <img id="img5" class="fullscreen-img" src="微信图片_20240722184108.jpg" alt="图片5">
+    <img id="img6" class="fullscreen-img" src="微信图片_20240722184113.jpg" alt="图片6">
+    <img id="img7" class="fullscreen-img" src="微信图片_20240722184759.jpg" alt="图片7">
 
     <script>
         document.getElementById('startBtn').onclick = function() {
             var randomNum = Math.floor(Math.random() * 7) + 1;
             // 显示数字
-            document.getElementById('result').innerHTML = '生成的数字是: ' + randomNum;
+            document.getElementById('result').innerHTML = '您今天的幸运数字是: ' + randomNum;
 
             // 隐藏按钮
             document.getElementById('startBtn').style.display = 'none';
@@ -68,8 +92,8 @@
             setTimeout(function() {
                 // 显示对应的图片
                 var selectedImage = document.getElementById('img' + randomNum);
-                selectedImage.style.display = 'block';
-            }, 1000); // 1秒后显示图片
+                selectedImage.classList.add('show'); // 添加显示类
+            }, 2000); // 2秒后显示图片
         };
     </script>
 </body>
