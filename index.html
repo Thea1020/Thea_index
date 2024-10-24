@@ -21,7 +21,7 @@
         #randomNumber {
             font-size: 48px;
             color: white; /* 随机数颜色 */
-            margin-top: 8px;
+            margin-top: 8px; /* 调整位置 */
             opacity: 0; /* 初始透明度 */
             transition: opacity 0.5s; /* 动画过渡 */
         }
@@ -69,9 +69,9 @@
 </head>
 <body>
     <div id="imageBox">
-         <img id="imageA" src="imageA.png" alt="图片A" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
-    <img id="imageB" src="imageB.png" alt="图片B" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0;">
-</div>
+        <img id="imageA" src="imageA.png" alt="图片A" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 1;">
+        <img id="imageB" src="imageB.png" alt="图片B" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0;">
+    </div>
     <div id="randomNumber"></div>
     <video id="transitionVideo" src="WeChat_20241024172224.mp4" autoplay muted style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"></video>
 
@@ -108,7 +108,7 @@
             const imageA = document.getElementById('imageA');
             const imageB = document.getElementById('imageB');
 
-            // 图片切换效果
+            // 隐藏 imageA 并显示 imageB
             imageA.style.opacity = '0'; // 隐藏第一张图
             imageB.style.opacity = '1'; // 显示第二张图
 
@@ -150,4 +150,3 @@
     </script>
 </body>
 </html>
-
