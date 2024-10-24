@@ -15,31 +15,15 @@
             overflow: hidden;
             font-family: "SimSun", "宋体", sans-serif;
             position: relative;
-            background: url('2Dgif0001.gif'), url('微信图片_20241024164129.jpg') no-repeat center center; /* 自定义背景图 */
+            background:url('2Dgif0001.gif'), url('微信图片_20241024164129.jpg')  no-repeat center center; /* 自定义背景图 */
             background-size: cover; /* 使背景图覆盖整个页面 */
         }
-        #startBtn {
-            padding: 20px;
-            border: none;
-            border-radius: 50%;
-            background-color: #FFD700;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s, background-color 0.3s;
-        }
-        #startBtn:hover {
-            transform: scale(1.05);
-            background-color: #FFEA00;
-        }
-        #result {
-            font-size: 36px;
-            margin: 20px 0;
-            color: white;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.5s, transform 0.5s;
+        #randomNumber {
+            font-size: 48px;
+            color: white; /* 随机数颜色 */
+            margin-top: 20px;
+            opacity: 0; /* 初始透明度 */
+            transition: opacity 0.5s; /* 动画过渡 */
         }
         .fullscreen-img {
             position: fixed;
@@ -49,36 +33,20 @@
             height: 100%;
             object-fit: cover;
             display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
+            opacity: 0; /* 初始透明度 */
+            transition: opacity 1s ease; /* 淡入淡出效果 */
             cursor: pointer; /* 增加点击手势 */
         }
         .show {
             display: block;
-            opacity: 1;
-        }
-        .wave {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 20%;
-            z-index: -1;
-            animation: wave 5s infinite linear;
-        }
-        @keyframes wave {
-            0% { background-position-x: 0; }
-            100% { background-position-x: 100%; }
-        }
-        @keyframes popIn {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
+            opacity: 1; /* 变为可见 */
         }
     </style>
 </head>
 <body>
-    <div class="wave"></div>
-    <button id="startBtn"> </button>
-    <div id="result"></div>
+    <div id="randomNumber"></div>
+    <img id="transitionGif" src="你的转场动画.gif" alt="转场动画" style="display: none;">
+
     <img id="img1" class="fullscreen-img" src="微信图片_20240722184058.jpg" alt="图片1">
     <img id="img2" class="fullscreen-img" src="微信图片_20240722184101.jpg" alt="图片2">
     <img id="img3" class="fullscreen-img" src="微信图片_20240722184104.jpg" alt="图片3">
@@ -89,52 +57,46 @@
     <img id="img8" class="fullscreen-img" src="微信图片_202410240225111.jpg" alt="图片8">
     <img id="img9" class="fullscreen-img" src="微信图片_202410240225151.jpg" alt="图片9">
 
-   <script>
+    <script>
         function getRandomNumber() {
-            // 获取今天的日期
             const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD格式
             const storedDate = localStorage.getItem('date');
             const storedNumber = localStorage.getItem('randomNumber');
 
-            // 如果日期相同，则返回存储的随机数
             if (storedDate === today) {
                 return storedNumber;
             } else {
-                // 否则生成新的随机数
-                const newRandomNum = Math.floor(Math.random() * 9) + 1; // 更新为9
+                const newRandomNum = Math.floor(Math.random() * 9) + 1;
                 localStorage.setItem('date', today);
                 localStorage.setItem('randomNumber', newRandomNum);
                 return newRandomNum;
             }
         }
 
-        document.getElementById('startBtn').onclick = function() {
-            const randomNum = getRandomNumber(); // 获取固定的随机数
-            const resultElement = document.getElementById('result');
-            resultElement.innerHTML = ' ' + randomNum;
+        // 显示随机数
+        const randomNum = getRandomNumber();
+        const resultElement = document.getElementById('randomNumber');
+        resultElement.innerHTML = randomNum;
 
-            // 隐藏按钮
-            document.getElementById('startBtn').style.display = 'none';
-            
-            // 显示数字的动画效果
-            setTimeout(function() {
-                resultElement.style.opacity = '1';
-                resultElement.style.transform = 'translateY(0)';
-                resultElement.style.animation = 'popIn 0.5s forwards';
-            }, 100); 
+        // 淡入随机数
+        setTimeout(function() {
+            resultElement.style.opacity = '1';
+        }, 100); 
 
-            // 在一段时间后显示图片
+        // 2秒后显示转场动画并跳转
+        setTimeout(function() {
+            document.getElementById('transitionGif').style.display = 'block'; // 显示转场动画
             setTimeout(function() {
+                document.getElementById('transitionGif').style.display = 'none'; // 隐藏转场动画
                 const selectedImage = document.getElementById('img' + randomNum);
-                selectedImage.classList.add('show');
-                selectedImage.style.display = 'block';
+                selectedImage.classList.add('show'); // 显示对应的图片
 
-                // 为图片添加点击事件
+                // 添加点击事件
                 selectedImage.onclick = function() {
-                    window.location.href = '下一页.html'; // 指向你的下一页
+                    window.location.href = '下一页.html'; // 跳转到下一页
                 };
-            }, 2000); 
-        };
+            }, 2000); // 等待转场动画后执行
+        }, 2000); // 等待随机数显示后执行
     </script>
 </body>
 </html>
