@@ -45,7 +45,7 @@
             position: absolute;
             bottom: 50px; /* 调整位置 */
             width: 200px; /* 调整宽度 */
-            height: 100px; /* 调整高度 */
+            height: 450px; /* 调整高度 */
             cursor: pointer; /* 增加点击手势 */
         }
     </style>
@@ -83,6 +83,7 @@
         }
 
         function start() {
+              document.getElementById('startButton').style.display = 'none'; // 点击后隐藏开始按钮
             // 显示随机数
             const randomNum = getRandomNumber();
             const resultElement = document.getElementById('randomNumber');
