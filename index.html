@@ -15,55 +15,81 @@
             overflow: hidden;
             font-family: "SimSun", "宋体", sans-serif;
             position: relative;
-            background: url('2Dgif0001.gif'), url('微信图片_20241024174619.jpg') no-repeat center center;
-            background-size: cover;
+            background: url('2Dgif0001.gif'), url('微信图片_20241024174619.jpg') no-repeat center center; /* 自定义背景图 */
+            background-size: cover; /* 使背景图覆盖整个页面 */
         }
         #randomNumber {
             font-size: 48px;
-            color: white;
-            margin-top: 8px;
-            opacity: 0;
-            transition: opacity 0.5s;
+            color: white; /* 随机数颜色 */
+            margin-top: 8px; /* 调整位置 */
+            opacity: 0; /* 初始透明度 */
+            transition: opacity 0.5s; /* 动画过渡 */
+        }
+        .fullscreen-img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            opacity: 0; /* 初始透明度 */
+            transition: opacity 1s ease; /* 淡入淡出效果 */
+            cursor: pointer; /* 增加点击手势 */
+        }
+        .show {
+            display: block;
+            opacity: 1; /* 变为可见 */
+        }
+        #startButton {
+            position: absolute;
+            bottom: 315px; /* 调整位置 */
+            width: 200px; /* 调整宽度 */
+            height: 100px; /* 调整高度 */
+            cursor: pointer; /* 增加点击手势 */
         }
         #imageBox {
-            width: 300px;
-            height: 100px;
+            width: 300px; /* 方形区域宽度 */
+            height: 100px; /* 方形区域高度 */
             overflow: hidden;
-            position: relative;
-            margin-bottom: 10px;
+            position: relative; /* 相对定位 */
+            margin-bottom: 40px; /* 按钮与方形区域的间距 */
         }
         #imageA, #imageB {
             position: absolute;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 0.5s ease-in-out; /* 修改为ease-in-out */
+            transition: opacity 0.5s ease-in-out; /* 修改为 ease-in-out */
         }
         #imageB {
             opacity: 0; /* 初始透明度为0 */
-        }
-        #startButton {
-            position: absolute;
-            bottom: 315px;
-            width: 200px;
-            height: 100px;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div id="imageBox">
-        <img id="imageA" src="imageA.png" alt="图片A">
-        <img id="imageB" src="imageB.png" alt="图片B">
+        <img id="imageA" src="imageA.png" alt="图片A" style="opacity: 1;">
+        <img id="imageB" src="imageB.png" alt="图片B" style="opacity: 0;">
     </div>
     <div id="randomNumber"></div>
     <video id="transitionVideo" src="WeChat_20241024172224.mp4" autoplay muted style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"></video>
+
+    <img id="img1" class="fullscreen-img" src="微信图片_20240722184058.jpg" alt="图片1">
+    <img id="img2" class="fullscreen-img" src="微信图片_20240722184101.jpg" alt="图片2">
+    <img id="img3" class="fullscreen-img" src="微信图片_20240722184104.jpg" alt="图片3">
+    <img id="img4" class="fullscreen-img" src="微信图片_20240722184106.jpg" alt="图片4">
+    <img id="img5" class="fullscreen-img" src="微信图片_20240722184108.jpg" alt="图片5">
+    <img id="img6" class="fullscreen-img" src="微信图片_20240722184113.jpg" alt="图片6">
+    <img id="img7" class="fullscreen-img" src="微信图片_20240722184759.jpg" alt="图片7">
+    <img id="img8" class="fullscreen-img" src="微信图片_202410240225111.jpg" alt="图片8">
+    <img id="img9" class="fullscreen-img" src="微信图片_202410240225151.jpg" alt="图片9">
 
     <img id="startButton" src="微信图片_20241024173308.png" alt="开始按钮" onclick="start();">
 
     <script>
         function getRandomNumber() {
-            const today = new Date().toISOString().split('T')[0];
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD格式
             const storedDate = localStorage.getItem('date');
             const storedNumber = localStorage.getItem('randomNumber');
 
@@ -78,13 +104,13 @@
         }
 
         function start() {
-            document.getElementById('startButton').style.display = 'none'; // 隐藏开始按钮
+            document.getElementById('startButton').style.display = 'none'; // 点击后隐藏开始按钮
             const imageA = document.getElementById('imageA');
             const imageB = document.getElementById('imageB');
 
-            // 切换透明度
-            imageA.style.opacity = '0';
-            imageB.style.opacity = '1';
+            // 隐藏 imageA 并显示 imageB
+            imageA.style.opacity = '0'; // 隐藏第一张图
+            imageB.style.opacity = '1'; // 显示第二张图
 
             // 显示随机数
             const randomNum = getRandomNumber();
@@ -94,31 +120,32 @@
             // 淡入随机数
             setTimeout(function() {
                 resultElement.style.opacity = '1';
-            }, 100);
+            }, 100); 
 
             // 2秒后显示转场视频并跳转
             setTimeout(function() {
                 const transitionVideo = document.getElementById('transitionVideo');
-                transitionVideo.style.display = 'block';
-                transitionVideo.play();
+                transitionVideo.style.display = 'block'; // 显示转场视频
+                transitionVideo.play(); // 播放视频
 
                 // 隐藏背景和按钮
-                document.body.style.background = 'none';
-                imageA.style.opacity = '0';
-                imageB.style.opacity = '0';
-                resultElement.style.opacity = '0';
+                document.body.style.background = 'none'; // 隐藏背景
+                imageA.style.opacity = '0'; // 隐藏图A
+                imageB.style.opacity = '0'; // 隐藏图B
+                resultElement.style.opacity = '0'; // 隐藏随机数
 
                 // 监听视频播放结束事件
                 transitionVideo.onended = function() {
-                    transitionVideo.style.display = 'none';
+                    transitionVideo.style.display = 'none'; // 隐藏转场视频
                     const selectedImage = document.getElementById('img' + randomNum);
-                    selectedImage.classList.add('show');
+                    selectedImage.classList.add('show'); // 显示对应的图片
 
+                    // 添加点击事件
                     selectedImage.onclick = function() {
-                        window.location.href = '下一页.html';
+                        window.location.href = '下一页.html'; // 跳转到下一页
                     };
                 };
-            }, 2000);
+            }, 2000); // 等待随机数显示后执行
         }
     </script>
 </body>
