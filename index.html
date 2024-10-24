@@ -15,7 +15,7 @@
             overflow: hidden;
             font-family: "SimSun", "宋体", sans-serif;
             position: relative;
-            background: url('2Dgif0001.gif'), url('微信图片_20241024164129.jpg') no-repeat center center; /* 自定义背景图 */
+            background: url('2Dgif0001.gif'), url('微信图片_20241024174619.jpg') no-repeat center center; /* 自定义背景图 */
             background-size: cover; /* 使背景图覆盖整个页面 */
         }
         #randomNumber {
@@ -43,14 +43,35 @@
         }
         #startButton {
             position: absolute;
-            bottom: 50px; /* 调整位置 */
+            bottom: 200px; /* 调整位置 */
             width: 200px; /* 调整宽度 */
-            height: 450px; /* 调整高度 */
+            height: 100px; /* 调整高度 */
             cursor: pointer; /* 增加点击手势 */
+        }
+        #imageBox {
+            width: 300px; /* 方形区域宽度 */
+            height: 100px; /* 方形区域高度 */
+            overflow: hidden;
+            position: relative; /* 相对定位 */
+            margin-bottom: 20px; /* 按钮与方形区域的间距 */
+        }
+        #imageA, #imageB {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s; /* 动画过渡 */
+        }
+        #imageB {
+            opacity: 0; /* 初始透明度为0 */
         }
     </style>
 </head>
 <body>
+    <div id="imageBox">
+        <img id="imageA" src="图A.jpg" alt="图A">
+        <img id="imageB" src="图B.jpg" alt="图B">
+    </div>
     <div id="randomNumber"></div>
     <video id="transitionVideo" src="WeChat_20241024172224.mp4" autoplay muted style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"></video>
 
@@ -83,7 +104,14 @@
         }
 
         function start() {
-              document.getElementById('startButton').style.display = 'none'; // 点击后隐藏开始按钮
+            document.getElementById('startButton').style.display = 'none'; // 点击后隐藏开始按钮
+            const imageA = document.getElementById('imageA');
+            const imageB = document.getElementById('imageB');
+
+            // 图片切换效果
+            imageA.style.opacity = '0'; // 隐藏第一张图
+            imageB.style.opacity = '1'; // 显示第二张图
+
             // 显示随机数
             const randomNum = getRandomNumber();
             const resultElement = document.getElementById('randomNumber');
@@ -99,6 +127,12 @@
                 const transitionVideo = document.getElementById('transitionVideo');
                 transitionVideo.style.display = 'block'; // 显示转场视频
                 transitionVideo.play(); // 播放视频
+
+                // 隐藏背景和按钮
+                document.body.style.background = 'none'; // 隐藏背景
+                imageA.style.opacity = '0'; // 隐藏图A
+                imageB.style.opacity = '0'; // 隐藏图B
+                resultElement.style.opacity = '0'; // 隐藏随机数
 
                 // 监听视频播放结束事件
                 transitionVideo.onended = function() {
