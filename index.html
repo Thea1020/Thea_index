@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>今日好运</title>
+    <title>今日摸鱼</title>
     <style>
         body {
             display: flex;
@@ -15,7 +15,7 @@
             overflow: hidden;
             font-family: "SimSun", "宋体", sans-serif;
             position: relative;
-            background:url('2Dgif0001.gif'), url('微信图片_20241024164129.jpg')  no-repeat center center; /* 自定义背景图 */
+            background: url('2Dgif0001.gif'), url('微信图片_20241024164129.jpg') no-repeat center center; /* 自定义背景图 */
             background-size: cover; /* 使背景图覆盖整个页面 */
         }
         #randomNumber {
@@ -41,11 +41,18 @@
             display: block;
             opacity: 1; /* 变为可见 */
         }
+        #startButton {
+            position: absolute;
+            bottom: 50px; /* 调整位置 */
+            width: 200px; /* 调整宽度 */
+            height: 100px; /* 调整高度 */
+            cursor: pointer; /* 增加点击手势 */
+        }
     </style>
 </head>
 <body>
     <div id="randomNumber"></div>
-    <img id="transitionGif" src="你的转场动画.gif" alt="转场动画" style="display: none;">
+    <video id="transitionVideo" src="WeChat_20241024172224.mp4" autoplay muted style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"></video>
 
     <img id="img1" class="fullscreen-img" src="微信图片_20240722184058.jpg" alt="图片1">
     <img id="img2" class="fullscreen-img" src="微信图片_20240722184101.jpg" alt="图片2">
@@ -56,6 +63,8 @@
     <img id="img7" class="fullscreen-img" src="微信图片_20240722184759.jpg" alt="图片7">
     <img id="img8" class="fullscreen-img" src="微信图片_202410240225111.jpg" alt="图片8">
     <img id="img9" class="fullscreen-img" src="微信图片_202410240225151.jpg" alt="图片9">
+
+    <img id="startButton" src="微信图片_20241024173308.png" alt="开始按钮" onclick="start();">
 
     <script>
         function getRandomNumber() {
@@ -73,30 +82,36 @@
             }
         }
 
-        // 显示随机数
-        const randomNum = getRandomNumber();
-        const resultElement = document.getElementById('randomNumber');
-        resultElement.innerHTML = randomNum;
+        function start() {
+            // 显示随机数
+            const randomNum = getRandomNumber();
+            const resultElement = document.getElementById('randomNumber');
+            resultElement.innerHTML = randomNum;
 
-        // 淡入随机数
-        setTimeout(function() {
-            resultElement.style.opacity = '1';
-        }, 100); 
-
-        // 2秒后显示转场动画并跳转
-        setTimeout(function() {
-            document.getElementById('transitionGif').style.display = 'block'; // 显示转场动画
+            // 淡入随机数
             setTimeout(function() {
-                document.getElementById('transitionGif').style.display = 'none'; // 隐藏转场动画
-                const selectedImage = document.getElementById('img' + randomNum);
-                selectedImage.classList.add('show'); // 显示对应的图片
+                resultElement.style.opacity = '1';
+            }, 100); 
 
-                // 添加点击事件
-                selectedImage.onclick = function() {
-                    window.location.href = '下一页.html'; // 跳转到下一页
+            // 2秒后显示转场视频并跳转
+            setTimeout(function() {
+                const transitionVideo = document.getElementById('transitionVideo');
+                transitionVideo.style.display = 'block'; // 显示转场视频
+                transitionVideo.play(); // 播放视频
+
+                // 监听视频播放结束事件
+                transitionVideo.onended = function() {
+                    transitionVideo.style.display = 'none'; // 隐藏转场视频
+                    const selectedImage = document.getElementById('img' + randomNum);
+                    selectedImage.classList.add('show'); // 显示对应的图片
+
+                    // 添加点击事件
+                    selectedImage.onclick = function() {
+                        window.location.href = '下一页.html'; // 跳转到下一页
+                    };
                 };
-            }, 2000); // 等待转场动画后执行
-        }, 2000); // 等待随机数显示后执行
+            }, 2000); // 等待随机数显示后执行
+        }
     </script>
 </body>
 </html>
