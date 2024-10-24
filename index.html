@@ -21,7 +21,7 @@
         #randomNumber {
             font-size: 48px;
             color: white; /* 随机数颜色 */
-            margin-top: 8px; /* 调整位置 */
+            margin-top: 8px;
             opacity: 0; /* 初始透明度 */
             transition: opacity 0.5s; /* 动画过渡 */
         }
@@ -34,7 +34,7 @@
             object-fit: cover;
             display: none;
             opacity: 0; /* 初始透明度 */
-            transition: opacity 1s ease; /* 淡入淡出效果 */
+            transition: opacity 0.5s ease; /* 淡入淡出效果 */
             cursor: pointer; /* 增加点击手势 */
         }
         .show {
@@ -52,7 +52,7 @@
             width: 300px; /* 方形区域宽度 */
             height: 100px; /* 方形区域高度 */
             overflow: hidden;
-            position: relative; /* 相对定位 */
+            position: ; /* 相对定位 */
             margin-bottom: 40px; /* 按钮与方形区域的间距 */
         }
         #imageA, #imageB {
@@ -60,7 +60,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 0.5s ease-in-out; /* 修改为 ease-in-out */
+            transition: opacity 0.5s; /* 动画过渡 */
         }
         #imageB {
             opacity: 0; /* 初始透明度为0 */
@@ -69,9 +69,9 @@
 </head>
 <body>
     <div id="imageBox">
-        <img id="imageA" src="imageA.png" alt="图片A" style="opacity: 1;">
-        <img id="imageB" src="imageB.png" alt="图片B" style="opacity: 0;">
-    </div>
+         <img id="imageA" src="imageA.png" alt="图片A" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+    <img id="imageB" src="imageB.png" alt="图片B" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0;">
+</div>
     <div id="randomNumber"></div>
     <video id="transitionVideo" src="WeChat_20241024172224.mp4" autoplay muted style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"></video>
 
@@ -108,7 +108,7 @@
             const imageA = document.getElementById('imageA');
             const imageB = document.getElementById('imageB');
 
-            // 隐藏 imageA 并显示 imageB
+            // 图片切换效果
             imageA.style.opacity = '0'; // 隐藏第一张图
             imageB.style.opacity = '1'; // 显示第二张图
 
@@ -140,10 +140,6 @@
                     const selectedImage = document.getElementById('img' + randomNum);
                     selectedImage.classList.add('show'); // 显示对应的图片
 
-                    // 添加点击事件
-                    selectedImage.onclick = function() {
-                        window.location.href = '下一页.html'; // 跳转到下一页
-                    };
                 };
             }, 2000); // 等待随机数显示后执行
         }
